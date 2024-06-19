@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'rekord_export'
+
+if ARGV.length != 2
+  puts "Usage: rekord_export <rekordbox_xml_path> <format>"
+  puts "Formats: m3u, itunes"
+  exit 1
+end
+
+rekordbox_xml_path = ARGV[0]
+format = ARGV[1].downcase
+
+converter = RekordExport::Converter.new(rekordbox_xml_path)
+
+case format
+when 'm3u'
+  converter.convert_to_m3u
+when 'itunes'
+  converter.convert_to_itunes
+else
+  puts "Unknown format: #{format}"
+  puts "Usage: rekord_export <rekordbox_xml_path> <format>"
+  puts "Formats: m3u, itunes"
+  exit 1
+end
